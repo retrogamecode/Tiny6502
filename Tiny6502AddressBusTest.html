@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+    <meta name="dcterms.created" content="Mon, 09 Mar 2015 18:02:24 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title></title>
+    
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<!-- import javascript libraries -->
+    <script type="text/javascript"src="bit_lib.js"></script>
+    <script type="text/javascript"src="Tiny6502cpu.js"></script>
+    <script type="text/javascript"src="Tiny6502AddressBus.js"></script>
+  </head>
+  <body>
+  <H3>Tiny 6502 Address Lines Test Page</H3>
+  <pre>
+   Physical Address Line   Maps to  Virtual AddressBus
+             +--+                               +--+
+             |  | A0 ---------------->A0 = bit 0|  |
+             +--+                               +--+
+             |  | A1 ---------------->A1 = bit 1|  |
+             +--+                               +--+
+             |  | A2 ---------------->A2 = bit 2|  |
+             +--+                               +--+
+               :                                  :       
+             +--+                               +--+
+             |  | A13 ------------->A13 = bit 13|  |
+             +--+                               +--+
+             |  | A14 ------------->A14 = bit 14|  |
+             +--+                               +--+
+             |  | A15 ------------->A15 = bit 15|  |
+             +--+                               +--+
+  </pre>
+  <script type="text/javascript">
+    initAddressBus();
+	document.write("!   Initialized Address Bus: " + AddrBus.toString(2) + "<br>");
+	setAddressLittleEndian(0x1000);
+	document.write("!   Little Endian Address Bus: " + AddrBus.toString(2) + "<br>");
+	
+	var AddrBuff8Bit = new Uint8Array(1);
+	var memAddr = 0x684a;
+	// AddrBuff8Bit[0] = (memAddr & 0xFF) << 8; 
+	// var mask1 = AddrBuff8Bit[0];
+	
+	// low_byte = uint_val & 0xff;
+    // high_byte = (uint_val & 0xff00) >> 8;
+	var mask1 = (memAddr & 0xFF) << 8;  
+	var maskHigh = (memAddr & 0xFF);
+	var mask2 = (memAddr >> 8) & 0xFF;
+	/*
+	AddrBus =  ((memAddr & 0xFF) << 8)
+           | ((memAddr >> 8) & 0xFF);
+	*/
+	document.write("!   Debug: " + " mask1: " + mask1.toString(16) + " mask2: " + mask2.toString(16) + " maskHigh: " + maskHigh.toString(16)+ "<br>");
+	AddrBus = mask1 | mask2;
+	document.write("!   Little Endian Address Bus: " + AddrBus.toString(2) + "<br>");
+	document.write("!   Little Endian Address Bus: " + AddrBus.toString(16) + "<br>");
+	
+	setAddressLittleEndian(0x684a);
+	document.write("!   setAddressLittleEndian: " + AddrBus.toString(16) + "<br>");
+	setAddressLittleEndian(0x1000);
+	document.write("!   setAddressLittleEndian: " + AddrBus.toString(16) + "<br>");
+	
+	setAddrBus8BitLittleEndian(0x684a);
+	document.write(debugAddr8Bit() + "<br>");
+  </script>
+  </body>
+</html>
