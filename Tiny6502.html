@@ -1,0 +1,68 @@
+<html>
+<head>
+<!-- import javascript libraries -->
+<script type="text/javascript"src="bit_lib.js"></script>
+<script type="text/javascript"src="Tiny6502cpu.js"></script>
+<script type="text/javascript"src="Tiny6502AddressBus.js"></script>
+<script type="text/javascript">
+
+var systemMemory = new Uint8Array(64);
+
+
+initStatusRegister();
+
+StatusRegister = setbit(StatusRegister, CBit);
+document.write("!   C-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+StatusRegister = setbit(StatusRegister, ZBit);
+document.write("!   Z-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+
+StatusRegister = setbit(StatusRegister, IBit);
+document.write("!   I-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+
+StatusRegister = setbit(StatusRegister, DBit);
+document.write("!   D-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+
+StatusRegister = setbit(StatusRegister, BBit);
+document.write("!   B-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+
+StatusRegister = setbit(StatusRegister, NBit);
+document.write("!   N-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+StatusRegister = setbit(StatusRegister, VBit);
+document.write("!   V-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+StatusRegister = setbit(StatusRegister, SBit);
+document.write("!   S-Bit Set DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+StatusRegister = clearbit(StatusRegister, CBit);
+document.write("!   C-Bit CLR DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+StatusRegister = clearbit(StatusRegister, CBit);
+document.write("!   C-Bit CLR DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+SetStatusRegisterBit(CBit);
+document.write("!   C-Bit SET DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+
+SetStatusRegisterBit(ZBit);
+document.write("!   Z-Bit SET DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+document.write("!   Z-Bit SET? DEBUG: " + isBitNSet(StatusRegister, ZBit) + "<br>");
+ClearStatusRegisterBit(ZBit);
+document.write("!   Z-Bit CLEAR DEBUG: " + StatusRegister.toString(2) + "<br>");
+
+document.write("!   Z-Bit SET? DEBUG: " + isBitNSet(StatusRegister, ZBit) + "<br>");
+
+InitMemory ();
+document.write(" " + memdump() + "<br>");
+
+</script>
+</head>
+<body>
+</body>
+</html>
